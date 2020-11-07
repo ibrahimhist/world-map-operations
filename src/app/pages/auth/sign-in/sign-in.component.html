@@ -1,1 +1,35 @@
-<p>sign-in works!</p>
+<div class="sign-in">
+  <p-card
+    class="sign-in__content"
+    header=" World Map Operations"
+    subheader="Welcome!"
+    [style]="{ width: '360px' }"
+    styleClass="p-card-shadow"
+  >
+    <p-header>
+      <img alt="World Image" src="assets/images/world.png" />
+    </p-header>
+    <p>
+      You are going to make fascinating operation, Exportations, importations,
+      Adding notes, and more! Make these fascinating operations with just one
+      single click. Hurry up!
+    </p>
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        type="button"
+        class="p-button-raised"
+        icon="pi pi-google"
+        label="Google Login - Sign in"
+        (click)="signInWithGoogle()"
+      ></button>
+    </ng-template>
+  </p-card>
+</div>
+
+<!-- <button
+  pButton
+  type="button"
+  label="Sign in with Google"
+  (click)="signInWithGoogle()"
+></button> -->
