@@ -1,0 +1,12 @@
+.sign-out {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+:host ::ng-deep .p-card .p-card-footer {
+  text-align: center;
+}

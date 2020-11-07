@@ -1,1 +1,23 @@
-<p>sign-out-success works!</p>
+<div class="sign-out">
+  <p-card
+    header="Signed Out Successfully"
+    subheader="You have been signed out successfully"
+    [style]="{ maxWidth: '360px', margin: '10px' }"
+    styleClass="p-card-shadow"
+  >
+    <p-header>
+      <img alt="World Image" src="assets/images/world2.png" />
+    </p-header>
+    <p>We look forward to seeing you soon.</p>
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        type="button"
+        class="p-button-raised p-button-warning"
+        icon="pi pi-sign-in"
+        label="Sign in"
+        [routerLink]="['/sign-in']"
+      ></button>
+    </ng-template>
+  </p-card>
+</div>

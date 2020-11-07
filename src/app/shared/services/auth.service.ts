@@ -62,5 +62,6 @@ export class AuthService {
 
   signOut(): void {
     this.socialAuthService.signOut();
+    this.clearStorage();
   }
 }

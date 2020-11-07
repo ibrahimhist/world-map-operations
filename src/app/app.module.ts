@@ -14,7 +14,6 @@ import { AppComponent } from './app.component';
 import { WorldMapOperationsComponent } from './pages/master/world-map-operations/world-map-operations.component';
 import { SignInComponent } from './pages/auth/sign-in/sign-in.component';
 import { ContinentComponent } from './pages/master/continent/continent.component';
-import { SignOutSuccessComponent } from './pages/auth/sign-out-success/sign-out-success.component';
 
 import { AuthService } from './shared/services/auth.service';
 
@@ -24,6 +23,7 @@ import {
 } from 'angularx-social-login';
 
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { SignOutSuccessComponent } from './pages/auth/sign-out-success/sign-out-success.component';
 
 @NgModule({
   declarations: [
