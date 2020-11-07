@@ -9,6 +9,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { SignInComponent } from './pages/auth/sign-in/sign-in.component';
 import { ContinentComponent } from './pages/master/continent/continent.component';
 import { SignOutSuccessComponent } from './pages/auth/sign-out-success/sign-out-success.component';
+import { AuthService } from './shared/services/auth.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { SignOutSuccessComponent } from './pages/auth/sign-out-success/sign-out-
     SignOutSuccessComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, LeafletModule],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
