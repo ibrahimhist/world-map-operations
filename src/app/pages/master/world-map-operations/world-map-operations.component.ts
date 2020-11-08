@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import { latLng, tileLayer } from 'leaflet';
-import { countriesGeo } from './countries.geo';
+import { countriesGeo } from '../../../shared/constants/countries.geo';
 import 'leaflet-contextmenu';
+import { SocialAuthService } from 'angularx-social-login';
 
 @Component({
   selector: 'app-world-map-operations',
@@ -42,16 +43,12 @@ export class WorldMapOperationsComponent implements OnInit {
     ],
   };
 
-  constructor() {}
+  constructor(private socialAuthService: SocialAuthService) {}
 
   ngOnInit(): void {}
 
   showOperationsDialog(): void {
     console.log('showOperationsDialog');
-  }
-
-  leafletMouseOver(event: any): void {
-    console.log('leafletMouseOver', event);
   }
 
   onMapReady(map: L.Map): void {

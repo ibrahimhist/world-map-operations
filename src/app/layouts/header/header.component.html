@@ -1,0 +1,27 @@
+<header *ngIf="isLoggedIn" class="header">
+  <img class="header__logo" alt="World Image" src="assets/images/world.png" />
+  <span class="header__user">Welcome, {{ user?.name || user?.email }}</span>
+
+  <p-autoComplete
+    class="header__country"
+    [(ngModel)]="selectedCountry"
+    [suggestions]="filteredCountries"
+    (completeMethod)="filterCountry($event)"
+    field="name"
+    [dropdown]="true"
+  >
+    <ng-template let-country pTemplate="item">
+      <div class="country-item">
+        <div>{{ country.name }}</div>
+      </div>
+    </ng-template>
+  </p-autoComplete>
+
+  <button
+    pButton
+    type="button"
+    label="Sign out"
+    (click)="signOut()"
+    class="p-button-outlined p-button-danger header__signout"
+  ></button>
+</header>

@@ -1,28 +1,37 @@
+import { JsonPipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { BehaviorSubject } from 'rxjs';
+import { User } from '../models/user.model';
 
 const STORAGE_ACCESS_TOKEN = 'access_token';
+const STORAGE_USER = 'user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  user: SocialUser;
+  user: User;
   loggedIn: boolean;
+
+  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private socialAuthService: SocialAuthService,
     private router: Router
-  ) {}
+  ) {
+    this.user = this.getUser();
+    this.isLoggedIn.next(this.isSignedIn());
+  }
 
   trackAuthState(): void {
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = user != null;
-      console.log('trackAuthState', user);
+      this.isLoggedIn.next(this.loggedIn);
     });
   }
 
@@ -36,9 +45,14 @@ export class AuthService {
     if (!value) {
       return;
     }
-    console.log(value);
 
     localStorage.setItem(STORAGE_ACCESS_TOKEN, value.idToken);
+    localStorage.setItem(STORAGE_USER, JSON.stringify(value));
+  }
+
+  getUser(): User {
+    const user = this.user || JSON.parse(localStorage.getItem(STORAGE_USER));
+    return user;
   }
 
   signInWithGoogle(navigateUrl?: string): void {
@@ -63,5 +77,8 @@ export class AuthService {
   signOut(): void {
     this.socialAuthService.signOut();
     this.clearStorage();
+    this.isLoggedIn.next(false);
+    this.user = null;
+    this.router.navigate(['/sign-out-success']);
   }
 }

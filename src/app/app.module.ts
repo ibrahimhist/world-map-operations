@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+
 import { AppRoutingModule } from './app-routing.module';
 
 import { environment } from 'src/environments/environment';
@@ -24,6 +28,7 @@ import {
 
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { SignOutSuccessComponent } from './pages/auth/sign-out-success/sign-out-success.component';
+import { HeaderComponent } from './layouts/header/header.component';
 
 @NgModule({
   declarations: [
@@ -32,15 +37,21 @@ import { SignOutSuccessComponent } from './pages/auth/sign-out-success/sign-out-
     SignInComponent,
     ContinentComponent,
     SignOutSuccessComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+
     LeafletModule,
     SocialLoginModule,
     ButtonModule,
     CardModule,
+    DropdownModule,
+    AutoCompleteModule,
   ],
   providers: [
     AuthService,
