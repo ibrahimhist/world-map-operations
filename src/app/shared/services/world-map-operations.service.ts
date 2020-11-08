@@ -78,7 +78,7 @@ export class WorldMapOperationsService {
     }
   }
 
-  private getWorldMapOperation(countryId: string): WorldMapOperation {
+  getWorldMapOperation(countryId: string): WorldMapOperation {
     return this.worldMapOperations.find((x) => x.countryId === countryId);
   }
 

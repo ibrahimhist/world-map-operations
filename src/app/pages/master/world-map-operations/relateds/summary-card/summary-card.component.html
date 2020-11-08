@@ -4,11 +4,11 @@
     <b>Total Import Count:</b> {{ importationCount }}
   </p>
   <p>
-    <b> Total Export / Total Import:</b>
+    <b>Total (Export / Import):</b>
     {{
       exportationCount > 0 && importationCount > 0
-        ? exportationCount / importationCount
-        : "-"
+        ? (exportationCount / importationCount | number: "1.2-2")
+        : "0.00"
     }}
   </p>
 </p-card>

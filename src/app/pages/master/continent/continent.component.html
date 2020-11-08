@@ -1,41 +1,54 @@
 <div class="continent">
-  <h1>{{ continent | uppercase }}</h1>
+  <h1>
+    <button
+      pButton
+      pRipple
+      type="button"
+      icon="pi pi-arrow-left"
+      class="p-button-rounded p-button-warning"
+      [routerLink]="['/']"
+    ></button>
 
-  <h2>Export</h2>
-  <ng-container
-    *ngTemplateOutlet="
-      countryTemplate;
-      context: { worldMapOperations: categorizedOperations.exports }
-    "
-  >
-  </ng-container>
+    {{ continent | uppercase }}
+  </h1>
 
-  <h2>Import</h2>
-  <ng-container
-    *ngTemplateOutlet="
-      countryTemplate;
-      context: { worldMapOperations: categorizedOperations.imports }
-    "
-  >
-  </ng-container>
+  <div class="continent__inner-container">
+    <h2>Export</h2>
+    <ng-container
+      *ngTemplateOutlet="
+        countryTemplate;
+        context: { worldMapOperations: categorizedOperations.exports }
+      "
+    >
+    </ng-container>
 
-  <h2>Note Only</h2>
-  <ng-container
-    *ngTemplateOutlet="
-      countryTemplate;
-      context: { worldMapOperations: categorizedOperations.noteOnly }
-    "
-  >
-  </ng-container>
+    <h2>Import</h2>
+    <ng-container
+      *ngTemplateOutlet="
+        countryTemplate;
+        context: { worldMapOperations: categorizedOperations.imports }
+      "
+    >
+    </ng-container>
 
-  <h2>Others</h2>
-  <ng-container
-    *ngTemplateOutlet="
-      countryTemplate;
-      context: { worldMapOperations: categorizedOperations.others }
-    "
-  >
-  </ng-container>
+    <h2>Note Only</h2>
+    <ng-container
+      *ngTemplateOutlet="
+        countryTemplate;
+        context: { worldMapOperations: categorizedOperations.noteOnly }
+      "
+    >
+    </ng-container>
+
+    <h2>Others</h2>
+    <ng-container
+      *ngTemplateOutlet="
+        countryTemplate;
+        context: { worldMapOperations: categorizedOperations.others }
+      "
+    >
+    </ng-container>
+  </div>
 </div>
 
 <ng-template #countryTemplate let-worldMapOperations="worldMapOperations">
@@ -43,7 +56,7 @@
     *ngIf="worldMapOperations && worldMapOperations.length === 0"
     class="warning-text"
   >
-    No available information
+    No information available
   </p>
   <div
     *ngIf="worldMapOperations && worldMapOperations.length > 0"

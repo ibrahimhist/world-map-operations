@@ -19,6 +19,9 @@ export class WorldMapCardComponent {
   selectedContextMenuCountry: Country;
   selectedCountryTarget: any;
 
+  redHex = '#f44336';
+  greenHex = '#4CAF50';
+
   constructor(
     private worldMapOperationsService: WorldMapOperationsService,
     private ngZone: NgZone
@@ -46,7 +49,10 @@ export class WorldMapCardComponent {
                 WorldMapOperationType.Exportation
               );
 
-              this.changeColorOfTarget('#4CAF50', this.selectedCountryTarget);
+              this.changeColorOfTarget(
+                this.greenHex,
+                this.selectedCountryTarget
+              );
             });
           },
         },
@@ -58,7 +64,7 @@ export class WorldMapCardComponent {
                 this.selectedContextMenuCountry.id,
                 WorldMapOperationType.Importation
               );
-              this.changeColorOfTarget('#f44336', this.selectedCountryTarget);
+              this.changeColorOfTarget(this.redHex, this.selectedCountryTarget);
             });
           },
         },
@@ -81,7 +87,7 @@ export class WorldMapCardComponent {
               this.worldMapOperationsService.clearEverything(
                 this.selectedContextMenuCountry.id
               );
-              this.changeColorOfTarget(null, this.selectedCountryTarget, true);
+              this.changeColorOfTarget(null, this.selectedCountryTarget);
             });
           },
         },
@@ -89,40 +95,42 @@ export class WorldMapCardComponent {
     };
   }
 
-  changeColorOfTarget(
-    colorHex: string,
-    target: any,
-    setToDefault?: boolean
-  ): void {
+  changeColorOfTarget(colorHex: string, target: any): void {
     if (target) {
-      const style = setToDefault
-        ? this.getDefaultMapStyle()
-        : {
-            weight: 5,
-            color: colorHex,
-            dashArray: '',
-            fillOpacity: 0.5,
-            fillColor: colorHex,
-          };
-
-      target.setStyle(style);
+      target.setStyle(this.getDefaultMapStyle(colorHex));
     }
   }
 
-  getDefaultMapStyle(): any {
+  getDefaultMapStyle(colorHex?: string): any {
     return {
-      weight: 2,
+      weight: 3,
       opacity: 1,
-      color: 'lightgrey',
+      color: colorHex || 'lightgrey',
       dashArray: '3',
-      fillOpacity: 0.7,
-      fillColor: 'transparent',
+      fillOpacity: 0.5,
+      fillColor: colorHex || 'transparent',
     };
+  }
+
+  checkCountryOperaionExistThenGetStyle(countryId: string): any {
+    const found = this.worldMapOperationsService.getWorldMapOperation(
+      countryId
+    );
+    let colorHex: string;
+
+    if (found && found.operationType) {
+      colorHex =
+        found.operationType === WorldMapOperationType.Exportation
+          ? this.greenHex
+          : this.redHex;
+    }
+
+    return this.getDefaultMapStyle(colorHex);
   }
 
   onMapReady(map: L.Map): void {
     const style = (feature) => {
-      return this.getDefaultMapStyle();
+      return this.checkCountryOperaionExistThenGetStyle(feature.id);
     };
 
     const onEachFeature = (feature, layer: L.Layer) => {

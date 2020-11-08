@@ -8,6 +8,10 @@
     margin-bottom: 10px;
   }
 
+  &__inner-container {
+    margin: 0 20px;
+  }
+
   &__countries {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
