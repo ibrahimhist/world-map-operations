@@ -1,6 +1,6 @@
-:host ::ng-deep .world-map path:hover {
-  fill: cornflowerblue;
+.world-map-operations {
+  padding: 20px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
 }
-// :host ::ng-deep .world-map rect:hover {
-//   fill: red;
-// }

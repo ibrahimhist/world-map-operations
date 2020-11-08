@@ -15,7 +15,7 @@ export class WorldMapOperationsComponent implements OnInit {
     layers: [
       tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
-        attribution: '...',
+        attribution: 'World Map Operations',
       }),
     ],
     zoom: 1,
@@ -52,8 +52,6 @@ export class WorldMapOperationsComponent implements OnInit {
   }
 
   onMapReady(map: L.Map): void {
-    console.log('onMapReady', map);
-
     function style(feature): any {
       return {
         weight: 2,

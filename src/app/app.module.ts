@@ -29,6 +29,7 @@ import {
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { SignOutSuccessComponent } from './pages/auth/sign-out-success/sign-out-success.component';
 import { HeaderComponent } from './layouts/header/header.component';
+import { ContinentsCardComponent } from './pages/master/world-map-operations/relateds/continents-card/continents-card.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { HeaderComponent } from './layouts/header/header.component';
     ContinentComponent,
     SignOutSuccessComponent,
     HeaderComponent,
+    ContinentsCardComponent,
   ],
   imports: [
     BrowserModule,

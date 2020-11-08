@@ -1,0 +1,14 @@
+<p-card header="Continents">
+  <ul class="continents">
+    <li *ngFor="let continent of continents" class="continents__item">
+      <a [routerLink]="['/continent/' + continent.id]" class="continents__link">
+        <img
+          [src]="'assets/images/continents/' + continent.id + '.png'"
+          alt=""
+        />
+
+        <span>{{ continent.text }}</span>
+      </a>
+    </li>
+  </ul>
+</p-card>
