@@ -1,0 +1,8 @@
+<p-card header="World Map">
+  <div
+    style="height: 40vh"
+    leaflet
+    [leafletOptions]="options"
+    (leafletMapReady)="onMapReady($event)"
+  ></div>
+</p-card>

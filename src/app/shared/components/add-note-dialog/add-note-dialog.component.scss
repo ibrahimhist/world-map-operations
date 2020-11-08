@@ -1,0 +1,9 @@
+.add-note-dialog {
+  display: flex;
+  flex-direction: column;
+
+  &__button {
+    align-self: flex-end;
+    margin-top: 20px;
+  }
+}

@@ -4,16 +4,8 @@ import { countriesGeo } from 'src/app/shared/constants/countries.geo';
 import { User } from 'src/app/shared/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-
-class Country {
-  id: string;
-  name: string;
-
-  constructor(id: string, name: string) {
-    this.id = id;
-    this.name = name;
-  }
-}
+import { Country } from 'src/app/shared/models/country.model';
+import { WorldMapOperationsService } from 'src/app/shared/services/world-map-operations.service';
 
 @Component({
   selector: 'app-header',
@@ -32,10 +24,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   filteredCountries: Country[] = [];
   typeHeadCountryFilter: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private authService: AuthService) {
-    this.countries = countriesGeo.features.map((x) => {
-      return new Country(x.id, x.properties.name);
-    });
+  constructor(
+    private authService: AuthService,
+    private worldMapOperationsService: WorldMapOperationsService
+  ) {
+    this.countries = this.worldMapOperationsService.getCountries();
   }
 
   ngOnInit(): void {

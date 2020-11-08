@@ -7,8 +7,12 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -30,6 +34,9 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 import { SignOutSuccessComponent } from './pages/auth/sign-out-success/sign-out-success.component';
 import { HeaderComponent } from './layouts/header/header.component';
 import { ContinentsCardComponent } from './pages/master/world-map-operations/relateds/continents-card/continents-card.component';
+import { WorldMapCardComponent } from './pages/master/world-map-operations/relateds/world-map-card/world-map-card.component';
+import { AddNoteDialogComponent } from './shared/components/add-note-dialog/add-note-dialog.component';
+import { WorldMapOperationsService } from './shared/services/world-map-operations.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +47,10 @@ import { ContinentsCardComponent } from './pages/master/world-map-operations/rel
     SignOutSuccessComponent,
     HeaderComponent,
     ContinentsCardComponent,
+    WorldMapCardComponent,
+    AddNoteDialogComponent,
   ],
+  entryComponents: [AddNoteDialogComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -54,9 +64,14 @@ import { ContinentsCardComponent } from './pages/master/world-map-operations/rel
     CardModule,
     DropdownModule,
     AutoCompleteModule,
+    DialogModule,
+    InputTextareaModule,
+    DynamicDialogModule,
   ],
   providers: [
     AuthService,
+    DialogService,
+    WorldMapOperationsService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

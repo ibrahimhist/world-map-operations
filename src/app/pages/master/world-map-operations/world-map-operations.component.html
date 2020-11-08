@@ -1,13 +1,5 @@
 <div class="world-map-operations">
-  <p-card header="World Map">
-    <div
-      style="height: 40vh"
-      leaflet
-      [leafletOptions]="options"
-      (leafletMapReady)="onMapReady($event)"
-    ></div>
-  </p-card>
-
+  <app-world-map-card></app-world-map-card>
   <app-continents-card></app-continents-card>
 
   <p-card header="Summary"> </p-card>

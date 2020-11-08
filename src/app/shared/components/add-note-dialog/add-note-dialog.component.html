@@ -1,0 +1,13 @@
+<div class="add-note-dialog">
+  <textarea [(ngModel)]="note" rows="5" cols="30" pInputTextarea></textarea>
+
+  <button
+    pButton
+    type="button"
+    icon="pi pi-check"
+    label="Add"
+    class="p-button-primary add-note-dialog__button"
+    [disabled]="!note"
+    (click)="onClickAddNote()"
+  ></button>
+</div>
