@@ -60,7 +60,6 @@ export class AuthService {
       .signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((value) => {
         this.haddleSocialLoginResult(value);
-        console.log(navigateUrl);
         if (navigateUrl) {
           this.router.navigate([navigateUrl]);
         }

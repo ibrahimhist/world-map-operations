@@ -89,7 +89,8 @@ export class WorldMapOperationsService {
       const newWorldMapOperations = new WorldMapOperation(
         countryId,
         null,
-        null
+        null,
+        { ...this.countries.find((x) => x.id === countryId) }
       );
       this.worldMapOperations.push(newWorldMapOperations);
       return newWorldMapOperations;

@@ -1,1 +1,66 @@
-<p>continent works!</p>
+<div class="continent">
+  <h1>{{ continent | uppercase }}</h1>
+
+  <h2>Export</h2>
+  <ng-container
+    *ngTemplateOutlet="
+      countryTemplate;
+      context: { worldMapOperations: categorizedOperations.exports }
+    "
+  >
+  </ng-container>
+
+  <h2>Import</h2>
+  <ng-container
+    *ngTemplateOutlet="
+      countryTemplate;
+      context: { worldMapOperations: categorizedOperations.imports }
+    "
+  >
+  </ng-container>
+
+  <h2>Note Only</h2>
+  <ng-container
+    *ngTemplateOutlet="
+      countryTemplate;
+      context: { worldMapOperations: categorizedOperations.noteOnly }
+    "
+  >
+  </ng-container>
+
+  <h2>Others</h2>
+  <ng-container
+    *ngTemplateOutlet="
+      countryTemplate;
+      context: { worldMapOperations: categorizedOperations.others }
+    "
+  >
+  </ng-container>
+</div>
+
+<ng-template #countryTemplate let-worldMapOperations="worldMapOperations">
+  <p
+    *ngIf="worldMapOperations && worldMapOperations.length === 0"
+    class="warning-text"
+  >
+    No available information
+  </p>
+  <div
+    *ngIf="worldMapOperations && worldMapOperations.length > 0"
+    class="continent__countries"
+  >
+    <p-card
+      *ngFor="let item of worldMapOperations"
+      [header]="item.country.name"
+      [subheader]="item?.operationType"
+      styleClass="p-card-shadow"
+      class="country-card"
+      [style]="{ height: '100%' }"
+    >
+      <!-- <p-header>
+    <img alt="World Image" src="assets/images/world.png" />
+  </p-header> -->
+      <p>{{ item.note || "No notes available." }}</p>
+    </p-card>
+  </div>
+</ng-template>

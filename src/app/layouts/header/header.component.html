@@ -1,5 +1,10 @@
 <header *ngIf="isLoggedIn" class="header">
-  <img class="header__logo" alt="World Image" src="assets/images/world.png" />
+  <img
+    class="header__logo"
+    alt="World Image"
+    src="assets/images/world.png"
+    [routerLink]="['/']"
+  />
   <span class="header__user">Welcome, {{ user?.name || user?.email }}</span>
 
   <p-autoComplete

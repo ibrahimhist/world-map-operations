@@ -23,6 +23,8 @@ export class WorldMapCardComponent {
     private worldMapOperationsService: WorldMapOperationsService,
     private ngZone: NgZone
   ) {
+    // to-do: hali hazırda yapılmışları tekrar çizmek lazım
+
     this.options = {
       layers: [
         tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

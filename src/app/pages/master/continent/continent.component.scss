@@ -1,0 +1,28 @@
+.continent {
+  padding: 20px;
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  &__countries {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+}
+
+.p-card {
+  height: 100% !important;
+}
+
+.warning-text {
+  margin-bottom: 20px;
+  // font-weight: bold;
+  font-size: 12px;
+}
