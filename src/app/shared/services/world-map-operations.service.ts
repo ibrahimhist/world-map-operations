@@ -120,4 +120,9 @@ export class WorldMapOperationsService {
       }
     });
   }
+
+  deepClear(): void {
+    this.worldMapOperations = [];
+    this.worldMapOperationsSubject.next([]);
+  }
 }

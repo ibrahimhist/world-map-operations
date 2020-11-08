@@ -6,6 +6,7 @@ import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../models/user.model';
+import { WorldMapOperationsService } from './world-map-operations.service';
 
 const STORAGE_ACCESS_TOKEN = 'access_token';
 const STORAGE_USER = 'user';
@@ -21,6 +22,8 @@ export class AuthService {
 
   constructor(
     private socialAuthService: SocialAuthService,
+    // N.Ş.A da bu servicesin burda olmaması lazım ama N.Ş.A standantında değiliz :)
+    private worldMapOperationsService: WorldMapOperationsService,
     private router: Router
   ) {
     this.user = this.getUser();
@@ -79,5 +82,6 @@ export class AuthService {
     this.isLoggedIn.next(false);
     this.user = null;
     this.router.navigate(['/sign-out-success']);
+    this.worldMapOperationsService.deepClear();
   }
 }
