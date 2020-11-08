@@ -1,0 +1,14 @@
+<p-card header="Summary">
+  <p><b>Total Export Count:</b> {{ exportationCount }}</p>
+  <p style="margin-bottom: 20px">
+    <b>Total Import Count:</b> {{ importationCount }}
+  </p>
+  <p>
+    <b> Total Export / Total Import:</b>
+    {{
+      exportationCount > 0 && importationCount > 0
+        ? exportationCount / importationCount
+        : "-"
+    }}
+  </p>
+</p-card>

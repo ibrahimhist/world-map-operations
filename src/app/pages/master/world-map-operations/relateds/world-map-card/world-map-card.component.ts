@@ -37,30 +37,33 @@ export class WorldMapCardComponent {
       contextmenuItems: [
         {
           text: 'Export',
-          callback: (e) => {
-            this.worldMapOperationsService.makeOperation(
-              this.selectedContextMenuCountry.id,
-              WorldMapOperationType.Exportation
-            );
+          callback: () => {
+            this.ngZone.run(() => {
+              this.worldMapOperationsService.makeOperation(
+                this.selectedContextMenuCountry.id,
+                WorldMapOperationType.Exportation
+              );
 
-            this.changeColorOfTarget('#4CAF50', this.selectedCountryTarget);
+              this.changeColorOfTarget('#4CAF50', this.selectedCountryTarget);
+            });
           },
         },
         {
           text: 'Import',
           callback: () => {
-            this.worldMapOperationsService.makeOperation(
-              this.selectedContextMenuCountry.id,
-              WorldMapOperationType.Importation
-            );
-            this.changeColorOfTarget('#f44336', this.selectedCountryTarget);
+            this.ngZone.run(() => {
+              this.worldMapOperationsService.makeOperation(
+                this.selectedContextMenuCountry.id,
+                WorldMapOperationType.Importation
+              );
+              this.changeColorOfTarget('#f44336', this.selectedCountryTarget);
+            });
           },
         },
         '-',
         {
           text: 'Add Note',
           callback: () => {
-            console.log('hey');
             this.ngZone.run(() => {
               this.worldMapOperationsService.showAddNoteDialog(
                 this.selectedContextMenuCountry
@@ -70,12 +73,14 @@ export class WorldMapCardComponent {
         },
         '-',
         {
-          text: 'Clear All',
+          text: 'Clear',
           callback: () => {
-            this.worldMapOperationsService.clearEverything(
-              this.selectedContextMenuCountry.id
-            );
-            this.changeColorOfTarget(null, this.selectedCountryTarget, true);
+            this.ngZone.run(() => {
+              this.worldMapOperationsService.clearEverything(
+                this.selectedContextMenuCountry.id
+              );
+              this.changeColorOfTarget(null, this.selectedCountryTarget, true);
+            });
           },
         },
       ],

@@ -37,6 +37,7 @@ import { ContinentsCardComponent } from './pages/master/world-map-operations/rel
 import { WorldMapCardComponent } from './pages/master/world-map-operations/relateds/world-map-card/world-map-card.component';
 import { AddNoteDialogComponent } from './shared/components/add-note-dialog/add-note-dialog.component';
 import { WorldMapOperationsService } from './shared/services/world-map-operations.service';
+import { SummaryCardComponent } from './pages/master/world-map-operations/relateds/summary-card/summary-card.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { WorldMapOperationsService } from './shared/services/world-map-operation
     ContinentsCardComponent,
     WorldMapCardComponent,
     AddNoteDialogComponent,
+    SummaryCardComponent,
   ],
   entryComponents: [AddNoteDialogComponent],
   imports: [

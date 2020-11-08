@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AddNoteDialogComponent } from '../components/add-note-dialog/add-note-dialog.component';
 import { countriesGeo } from '../constants/countries.geo';
 import { Country } from '../models/country.model';
@@ -13,6 +14,9 @@ import {
 })
 export class WorldMapOperationsService {
   private worldMapOperations: WorldMapOperation[];
+  private worldMapOperationsSubject: BehaviorSubject<
+    WorldMapOperation[]
+  > = new BehaviorSubject<WorldMapOperation[]>([]);
 
   private countries: Country[];
 
@@ -33,6 +37,14 @@ export class WorldMapOperationsService {
     return [...this.worldMapOperations];
   }
 
+  getWorldMapOperationsAsObservable(): Observable<WorldMapOperation[]> {
+    return this.worldMapOperationsSubject.asObservable();
+  }
+
+  private updateWorldMapOperationsSubject(): void {
+    this.worldMapOperationsSubject.next(this.getWorldMapOperations());
+  }
+
   isExistInWorldMapOperations(countryId: string): boolean {
     return (
       this.worldMapOperations.findIndex((x) => x.countryId === countryId) !== -1
@@ -47,11 +59,13 @@ export class WorldMapOperationsService {
   makeOperation(countryId: string, operationType: WorldMapOperationType): void {
     const operation = this.getOrCreateWorldMapOperation(countryId);
     operation.operationType = operationType;
+    this.updateWorldMapOperationsSubject();
   }
 
   addNote(countryId: string, note: string): void {
     const operation = this.getOrCreateWorldMapOperation(countryId);
     operation.note = note;
+    this.updateWorldMapOperationsSubject();
   }
 
   clearEverything(countryId: string): void {
@@ -60,6 +74,7 @@ export class WorldMapOperationsService {
     );
     if (foundIndex !== -1) {
       this.worldMapOperations.splice(foundIndex, 1);
+      this.updateWorldMapOperationsSubject();
     }
   }
 
