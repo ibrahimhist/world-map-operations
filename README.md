@@ -1,3 +1,5 @@
+Angular Project
+
 GİRİŞ SAYFASI
 ▪ Kullanıcı, sizin seçeceğiniz sosyal ağlardan herhangi biri ile login olabilmeli.
 ▪ Başarılı Login sonrasında Detay sayfasına yönlenmeli.
