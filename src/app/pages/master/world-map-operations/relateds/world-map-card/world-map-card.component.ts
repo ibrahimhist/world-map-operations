@@ -39,7 +39,7 @@ export class WorldMapCardComponent implements OnDestroy {
   ) {
     this.worldMapOperationsSubs = this.worldMapOperationsService
       .getWorldMapOperationsAsObservable()
-      .subscribe((worldMapOperationList: WorldMapOperation[]) => {
+      .subscribe((_: WorldMapOperation[]) => {
         if (this.map) {
           if (!this.isInsideOperation) {
             this.geoJson.resetStyle();
