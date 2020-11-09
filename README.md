@@ -1,27 +1,36 @@
-# WorldMapOperations
+GİRİŞ SAYFASI
+▪ Kullanıcı, sizin seçeceğiniz sosyal ağlardan herhangi biri ile login olabilmeli.
+▪ Başarılı Login sonrasında Detay sayfasına yönlenmeli.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
+DETAY SAYFASI
+▪ Header sol alanda varsa kullanıcının Adı ve Soyadı, yoksa E-posta adresi ya da Kullanıcı Adı
+bulunmalı.
+▪ Header sağ alanda Çıkış butonu bulunmalı.
+▫ Butona tıklandığında Çıkış sayfasına yönlenmeli.
+▪ Header orta alanda Arama bölümü olmalı
+▫ En az 3 karakter yazıldıktan sonra ülkeler listelenmeli. (İstenilen yöntem tercih edilebilir)
+▫ Arama sonucu listelenen ülkeler arasında bir seçim yapıldığında aşağıda belirtildiği gibi menü
+açılmalı.
 
-## Development server
+▪ Orta kısımda bir dünya haritası olmalı. (İstenilen yöntem tercih edilebilir)
+▫ Her ülkenin sınırları çizilmiş olmalı.
+▫ Ülkelerin üzerine gelindiğinde ülkenin rengi değişmeli.
+▫ Ülke üzerine sağ tıklandığında menü açılmalı ve menüde aşağıdaki seçenekler olmalı:
+▪ "İhracat Yap" (Seçilen ülkenin rengini yeşil yapar)
+▪ "İthalat Yap" (Seçilen ülkenin rengini kırmızı yapar)
+▪ "Not Ekle" (Seçilen ülkeye not ekler)
+▪ "Bilgileri Sil" (Seçilen ülke ile ilgili tüm bilgileri siler)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+▪ Haritanın altında kıtaların listesi yer almalı.
+▫ Her bir kıtaya tıklandığında kıtaya ait sayfaya yönlenmeli. (Ör: /kita/avrupa)
 
-## Code scaffolding
+▪ Kıta listesinin altında, kullanıcının tüm ülkelere göre kaç ülkeye ihracat, kaç ülkeden ithalat
+yaptığının oranı yazılmalı.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+KITA SAYFASI
+▪ Kıtaya ait sayfada, o kıtaya bağlı ülkelere ait bilgiler (ihracat ve ithalat sayıları, not) ve o ülkelerin
+bayrakları yer almalı. Eğer ülkeye ait bilgi yoksa bilgilendirme metni eklenmeli.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+ÇIKIŞ SAYFASI
+▪ Kullanıcının çıkış yaptığına dair bilgilendirme metni ve Giriş sayfasına yönlendiren bir button
+eklenmeli.

@@ -25,30 +25,25 @@ export class WorldMapCardComponent implements OnDestroy {
 
   options: any;
 
-  selectedContextMenuCountry: Country;
-  selectedCountryTarget: any;
+  selectedCountryForContextMenu: Country;
 
   redHex = '#f44336';
   greenHex = '#4CAF50';
-
-  isInsideOperation: boolean;
 
   constructor(
     private worldMapOperationsService: WorldMapOperationsService,
     private ngZone: NgZone
   ) {
+    // any update will trigger world map operation to make re-style
     this.worldMapOperationsSubs = this.worldMapOperationsService
       .getWorldMapOperationsAsObservable()
       .subscribe((_: WorldMapOperation[]) => {
         if (this.map) {
-          if (!this.isInsideOperation) {
-            this.geoJson.resetStyle();
-          } else {
-            this.isInsideOperation = false;
-          }
+          this.geoJson.resetStyle();
         }
       });
 
+    //  leafletjs options
     this.options = {
       layers: [
         tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -66,16 +61,10 @@ export class WorldMapCardComponent implements OnDestroy {
           text: 'Export',
           callback: () => {
             this.ngZone.run(() => {
-              this.isInsideOperation = true;
-
+              // makes export
               this.worldMapOperationsService.makeOperation(
-                this.selectedContextMenuCountry.id,
+                this.selectedCountryForContextMenu.id,
                 WorldMapOperationType.Exportation
-              );
-
-              this.changeColorOfTarget(
-                this.greenHex,
-                this.selectedCountryTarget
               );
             });
           },
@@ -84,13 +73,11 @@ export class WorldMapCardComponent implements OnDestroy {
           text: 'Import',
           callback: () => {
             this.ngZone.run(() => {
-              this.isInsideOperation = true;
-
+              // makes import
               this.worldMapOperationsService.makeOperation(
-                this.selectedContextMenuCountry.id,
+                this.selectedCountryForContextMenu.id,
                 WorldMapOperationType.Importation
               );
-              this.changeColorOfTarget(this.redHex, this.selectedCountryTarget);
             });
           },
         },
@@ -99,8 +86,9 @@ export class WorldMapCardComponent implements OnDestroy {
           text: 'Add Note',
           callback: () => {
             this.ngZone.run(() => {
+              // adds note
               this.worldMapOperationsService.showAddNoteDialog(
-                this.selectedContextMenuCountry
+                this.selectedCountryForContextMenu
               );
             });
           },
@@ -110,12 +98,10 @@ export class WorldMapCardComponent implements OnDestroy {
           text: 'Clear',
           callback: () => {
             this.ngZone.run(() => {
-              this.isInsideOperation = true;
-
+              // clears
               this.worldMapOperationsService.clearEverything(
-                this.selectedContextMenuCountry.id
+                this.selectedCountryForContextMenu.id
               );
-              this.changeColorOfTarget(null, this.selectedCountryTarget);
             });
           },
         },
@@ -123,12 +109,14 @@ export class WorldMapCardComponent implements OnDestroy {
     };
   }
 
+  // changing target color
   changeColorOfTarget(colorHex: string, target: any): void {
     if (target) {
       target.setStyle(this.getDefaultMapStyle(colorHex));
     }
   }
 
+  // defult country map style
   getDefaultMapStyle(colorHex?: string): any {
     return {
       weight: 3,
@@ -140,6 +128,7 @@ export class WorldMapCardComponent implements OnDestroy {
     };
   }
 
+  // coloring according to operation type existence
   checkCountryOperaionExistThenGetStyle(countryId: string): any {
     const found = this.worldMapOperationsService.getWorldMapOperation(
       countryId
@@ -156,11 +145,13 @@ export class WorldMapCardComponent implements OnDestroy {
     return this.getDefaultMapStyle(colorHex);
   }
 
+  // map ready
   onMapReady(map: L.Map): void {
     this.map = map;
     this.geoJson = this.createMapBounds(this.map);
   }
 
+  // creates bonds from geojson
   createMapBounds(map: L.Map): L.GeoJSON<any> {
     const geoJson = this.getGeoJson().addTo(map);
     map.fitBounds(geoJson.getBounds());
@@ -180,6 +171,7 @@ export class WorldMapCardComponent implements OnDestroy {
             e.target.feature.id
           );
 
+          // checkexistance in operations, if not uses default hover style
           if (!isExist) {
             this.changeColorOfTarget('#FFEB3B', target);
           }
@@ -188,6 +180,7 @@ export class WorldMapCardComponent implements OnDestroy {
             target.bringToFront();
           }
 
+          // for note tooltip
           if (isExist) {
             const note = this.worldMapOperationsService.getNote(
               e.target.feature.id
@@ -202,6 +195,7 @@ export class WorldMapCardComponent implements OnDestroy {
           const isExist = this.worldMapOperationsService.isExistInWorldMapOperations(
             e.target.feature.id
           );
+          // make sure not clearing  red or green color
           if (!isExist) {
             geojson.resetStyle(e.target);
           }
@@ -209,11 +203,10 @@ export class WorldMapCardComponent implements OnDestroy {
           layer.closePopup();
         },
         contextmenu: (e) => {
-          this.selectedContextMenuCountry = new Country(
+          this.selectedCountryForContextMenu = new Country(
             e.target.feature.id,
             e.target.feature.properties.name
           );
-          this.selectedCountryTarget = e.target;
         },
       });
     };
