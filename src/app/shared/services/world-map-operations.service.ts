@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AddNoteDialogComponent } from '../components/add-note-dialog/add-note-dialog.component';
+import { OperationDialogComponent } from '../components/operation-dialog/operation-dialog.component';
 import { countriesGeo } from '../constants/countries.geo';
 import { Country } from '../models/country.model';
 import {
@@ -21,8 +23,12 @@ export class WorldMapOperationsService {
   private countries: Country[];
 
   private addNoteRef: DynamicDialogRef;
+  private operationRef: DynamicDialogRef;
 
-  constructor(public dialogService: DialogService) {
+  constructor(
+    public dialogService: DialogService,
+    private messageService: MessageService
+  ) {
     this.worldMapOperations = [];
     this.countries = countriesGeo.features.map((x) => {
       return new Country(x.id, x.properties.name);
@@ -117,7 +123,29 @@ export class WorldMapOperationsService {
     this.addNoteRef.onClose.subscribe((data: any) => {
       if (data) {
         this.addNote(country.id, data);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Successfuly added note.',
+        });
       }
+    });
+  }
+
+  showOperationDialog(country: Country): void {
+    if (this.operationRef) {
+      this.operationRef.close();
+    }
+
+    this.operationRef = this.dialogService.open(OperationDialogComponent, {
+      header: country.name,
+      data: country,
+      contentStyle: {
+        'max-height': '500px',
+        overflow: 'auto',
+        maxWidth: '90vw',
+      },
+      baseZIndex: 10000,
     });
   }
 

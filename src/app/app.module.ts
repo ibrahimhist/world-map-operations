@@ -10,6 +10,7 @@ import { CardModule } from 'primeng/card';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ToastModule } from 'primeng/toast';
 
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -38,6 +39,8 @@ import { WorldMapCardComponent } from './pages/master/world-map-operations/relat
 import { AddNoteDialogComponent } from './shared/components/add-note-dialog/add-note-dialog.component';
 import { WorldMapOperationsService } from './shared/services/world-map-operations.service';
 import { SummaryCardComponent } from './pages/master/world-map-operations/relateds/summary-card/summary-card.component';
+import { OperationDialogComponent } from './shared/components/operation-dialog/operation-dialog.component';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -51,8 +54,9 @@ import { SummaryCardComponent } from './pages/master/world-map-operations/relate
     WorldMapCardComponent,
     AddNoteDialogComponent,
     SummaryCardComponent,
+    OperationDialogComponent,
   ],
-  entryComponents: [AddNoteDialogComponent],
+  entryComponents: [AddNoteDialogComponent, OperationDialogComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -69,11 +73,13 @@ import { SummaryCardComponent } from './pages/master/world-map-operations/relate
     DialogModule,
     InputTextareaModule,
     DynamicDialogModule,
+    ToastModule,
   ],
   providers: [
     AuthService,
     DialogService,
     WorldMapOperationsService,
+    MessageService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

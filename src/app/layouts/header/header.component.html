@@ -14,6 +14,7 @@
     (completeMethod)="filterCountry($event)"
     field="name"
     [dropdown]="true"
+    (onSelect)="onChangeCountry()"
   >
     <ng-template let-country pTemplate="item">
       <div class="country-item">

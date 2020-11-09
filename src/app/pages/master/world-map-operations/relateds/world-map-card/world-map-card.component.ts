@@ -2,10 +2,14 @@ import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import L, { tileLayer, latLng } from 'leaflet';
 import { Dialog } from 'primeng/dialog';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Subscription } from 'rxjs';
 import { AddNoteDialogComponent } from 'src/app/shared/components/add-note-dialog/add-note-dialog.component';
 import { countriesGeo } from 'src/app/shared/constants/countries.geo';
 import { Country } from 'src/app/shared/models/country.model';
-import { WorldMapOperationType } from 'src/app/shared/models/world-map-operation.model';
+import {
+  WorldMapOperation,
+  WorldMapOperationType,
+} from 'src/app/shared/models/world-map-operation.model';
 import { WorldMapOperationsService } from 'src/app/shared/services/world-map-operations.service';
 
 @Component({
@@ -13,7 +17,12 @@ import { WorldMapOperationsService } from 'src/app/shared/services/world-map-ope
   templateUrl: './world-map-card.component.html',
   styleUrls: ['./world-map-card.component.scss'],
 })
-export class WorldMapCardComponent {
+export class WorldMapCardComponent implements OnDestroy {
+  worldMapOperationsSubs: Subscription;
+
+  map: L.Map;
+  geoJson: L.GeoJSON<any>;
+
   options: any;
 
   selectedContextMenuCountry: Country;
@@ -22,17 +31,30 @@ export class WorldMapCardComponent {
   redHex = '#f44336';
   greenHex = '#4CAF50';
 
+  isInsideOperation: boolean;
+
   constructor(
     private worldMapOperationsService: WorldMapOperationsService,
     private ngZone: NgZone
   ) {
-    // to-do: hali hazırda yapılmışları tekrar çizmek lazım
+    this.worldMapOperationsSubs = this.worldMapOperationsService
+      .getWorldMapOperationsAsObservable()
+      .subscribe((worldMapOperationList: WorldMapOperation[]) => {
+        if (this.map) {
+          if (!this.isInsideOperation) {
+            this.geoJson.resetStyle();
+          } else {
+            this.isInsideOperation = false;
+          }
+        }
+      });
 
     this.options = {
       layers: [
         tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 18,
+          maxZoom: 12,
           attribution: 'World Map Operations',
+          noWrap: true,
         }),
       ],
       zoom: 1,
@@ -44,6 +66,8 @@ export class WorldMapCardComponent {
           text: 'Export',
           callback: () => {
             this.ngZone.run(() => {
+              this.isInsideOperation = true;
+
               this.worldMapOperationsService.makeOperation(
                 this.selectedContextMenuCountry.id,
                 WorldMapOperationType.Exportation
@@ -60,6 +84,8 @@ export class WorldMapCardComponent {
           text: 'Import',
           callback: () => {
             this.ngZone.run(() => {
+              this.isInsideOperation = true;
+
               this.worldMapOperationsService.makeOperation(
                 this.selectedContextMenuCountry.id,
                 WorldMapOperationType.Importation
@@ -84,6 +110,8 @@ export class WorldMapCardComponent {
           text: 'Clear',
           callback: () => {
             this.ngZone.run(() => {
+              this.isInsideOperation = true;
+
               this.worldMapOperationsService.clearEverything(
                 this.selectedContextMenuCountry.id
               );
@@ -129,6 +157,17 @@ export class WorldMapCardComponent {
   }
 
   onMapReady(map: L.Map): void {
+    this.map = map;
+    this.geoJson = this.createMapBounds(this.map);
+  }
+
+  createMapBounds(map: L.Map): L.GeoJSON<any> {
+    const geoJson = this.getGeoJson().addTo(map);
+    map.fitBounds(geoJson.getBounds());
+    return geoJson;
+  }
+
+  getGeoJson(): L.GeoJSON {
     const style = (feature) => {
       return this.checkCountryOperaionExistThenGetStyle(feature.id);
     };
@@ -182,8 +221,14 @@ export class WorldMapCardComponent {
     const geojson = L.geoJSON(countriesGeo as any, {
       style,
       onEachFeature,
-    }).addTo(map);
+    });
 
-    map.fitBounds(geojson.getBounds());
+    return geojson;
+  }
+
+  ngOnDestroy(): void {
+    if (this.worldMapOperationsSubs) {
+      this.worldMapOperationsSubs.unsubscribe();
+    }
   }
 }

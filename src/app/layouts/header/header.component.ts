@@ -65,6 +65,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onChangeCountry(): void {
     // console.log(this.selectedCountry);
+    if (this.selectedCountry) {
+      this.worldMapOperationsService.showOperationDialog(this.selectedCountry);
+    }
   }
 
   filterCountry(event): void {
